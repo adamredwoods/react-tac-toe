@@ -9,7 +9,7 @@ class Square extends Component {
    render() {
       return (
          <div className="square" onClick={this.clickHandler}>
-            {this.props.value}
+            <div className="mark">{this.props.value}</div>
          </div>
       )
    }
