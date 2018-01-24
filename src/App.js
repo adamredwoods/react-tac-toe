@@ -1,27 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import Board from "./board.js";
-
+import MovesButtons from "./movesButtons"
 
 const PLAYER_MARK = ["X","O"];
 const WIN_CASES = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[0,3,6],[1,4,7],[2,5,8],[2,4,6]];
 
-const Moves = (props) => {
 
-   const thisClick = (i) => {
-      //console.log(e);
-      props.moveClick(i);
-   }
-
-   return (
-      <div class="move-div">
-         {props.move.map((m,i) => (
-            <div className="move-button div-center" onClick={thisClick.bind(this,i)} key={i}>Move {i+1}</div>
-         ))}
-
-      </div>
-   )
-}
 
 const Message = (props) => {
    if(props.winner) {
@@ -42,7 +27,8 @@ class App extends Component {
          player: 0,
          move: [],
          winner: null,
-         turn: 1
+         turn: 1,
+         rewind: 0
       }
    }
 
@@ -95,13 +81,13 @@ class App extends Component {
       this.setState({player: 1-this.state.player});
       let m = this.state.move;
       m.push(b);
-      this.setState({move: m, turn: this.state.turn+1});
+      this.setState({move: m, turn: this.state.turn+1, rewind: this.state.turn+1});
 
       this.checkForWin(b);
    }
 
    moveClick = (num) => {
-      this.setState({board: this.state.move[num]});
+      this.setState({board: this.state.move[num], rewind: num});
    }
 
   render() {
@@ -109,7 +95,7 @@ class App extends Component {
       <div className="App">
          <Board board={this.state.board} click={this.clickHandler} player={this.state.player} winner={this.state.winner}/>
          <Message player={this.state.player} winner={this.state.winner} turn={this.state.turn} />
-         <Moves move={this.state.move} moveClick={this.moveClick} />
+         <MovesButtons move={this.state.move} moveClick={this.moveClick} rewind={this.state.rewind}/>
 
       </div>
 

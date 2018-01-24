@@ -55,3 +55,8 @@
    width: 80%;
    margin: 0 auto;
 }
+
+.move-select {
+   background-color: #111;
+   color: #fff;
+}
